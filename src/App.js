@@ -11,6 +11,7 @@ import {
 import index from './pages/index';
 import Simpson13 from './pages/simpson13';
 import Simpson38 from './pages/simpson38';
+import Fdd from './pages/fdd'
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/" component={index}/>
         <Route exact path="/simpsons_1_3" component={Simpson13}/>
         <Route exact path="/simpsons_3_8" component={Simpson38}/>
+        <Route exact path="/fdd" component={Fdd}/>
       </Switch>
     </Router>
   );
