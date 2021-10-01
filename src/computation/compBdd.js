@@ -3,7 +3,25 @@ import {
 } from 'mathjs'
 import Polynomial from 'polynomial'
 
-export const computeBdd = (equation, xi, step, roundOff) => {
+
+
+export const computeAnswer = (equation, xi, step, roundOff) => {
+    let h2Step = round(step/2, roundOff)
+    let h1 = computeBdd(equation, xi, step, roundOff)
+    let h2 = computeBdd(equation, xi, h2Step, roundOff)
+    let richardson = computeRichardson(h1.truncated, h2.truncated, roundOff)
+
+    let answer = {
+        h1,
+        h2,
+        richardson
+    }
+
+    console.log(answer)
+
+}
+
+const computeBdd = (equation, xi, step, roundOff) => {
     let x1 = computeXiDecrease(xi, step, 1, roundOff)
     let x2 = computeXiDecrease(xi, step, 2, roundOff)
     let fxi = computeFx(equation, xi, roundOff)
@@ -22,8 +40,7 @@ export const computeBdd = (equation, xi, step, roundOff) => {
         truncated: truncated,
         accurate: accurate
     }
-
-    console.log(data)
+    return data
 }
 
 
@@ -37,7 +54,7 @@ const computeFx = (equation, x, roundOff) => {
 }
 
 const computeTruncated = (fx2, fx1, step, roundOff) => {
-    let answer = (fx2-fx1)/step
+    let answer = (fx1-fx2)/step
     return round(answer, roundOff)
 }
 
@@ -45,4 +62,8 @@ const computeAccurate = (fx2, fx1, fxi, step, roundOff) => {
     let answer = ((3*fxi)-(4*fx1)+fx2)/(2*step)
     return round(answer, roundOff)
 
+}
+const computeRichardson = (h1,h2, roundOff) => {
+    let answer = ((4/3) * h2)-((1/3)*h1)
+    return round(answer, roundOff)
 }

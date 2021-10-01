@@ -3,7 +3,26 @@ import {
 } from 'mathjs'
 import Polynomial from 'polynomial'
 
-export const computeFdd = (equation, xi, step, roundOff) => {
+
+export const computeAnswer = (equation, xi, step, roundOff) => {
+    let h2Step = round(step/2, roundOff)
+    let h1 = computeFdd(equation, xi, step, roundOff)
+    let h2 = computeFdd(equation, xi, h2Step, roundOff)
+    let richardson = computeRichardson(h1.truncated, h2.truncated, roundOff)
+
+    let answer = {
+        h1,
+        h2,
+        richardson
+    }
+
+    console.log(answer)
+
+}
+
+
+
+ const computeFdd = (equation, xi, step, roundOff) => {
     let x1 = computeXiIncreate(xi, step, 1, roundOff)
     let x2 = computeXiIncreate(xi, step, 2, roundOff)
     let fxi = computeFx(equation, xi, roundOff)
@@ -22,8 +41,7 @@ export const computeFdd = (equation, xi, step, roundOff) => {
         truncated: truncated,
         accurate: accurate
     }
-
-    console.log(data)
+    return data
 }
 
 
@@ -45,4 +63,9 @@ const computeAccurate = (fx2, fx1, fxi, step, roundOff) => {
     let answer = ((-1 * fx2)+(4*fx1)-(3*fxi))/(2*step)
     return round(answer, roundOff)
 
+}
+
+const computeRichardson = (h1,h2, roundOff) => {
+    let answer = ((4/3) * h2)-((1/3)*h1)
+    return round(answer, roundOff)
 }
