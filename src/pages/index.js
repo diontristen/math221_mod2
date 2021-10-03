@@ -15,11 +15,9 @@ export default function index() {
                 }}
             >
                 <a
-                    href="/simpsons_1_3"
-                >Simpson’s 1/3 Rule</a>
-                <a>Simpson’s 3/8 Rule</a>
-                <a>Forward Finite</a>
-                <a>Backward Finite</a>
+                    href="/simpsons_rule"
+                >Simpson’s Rule</a>
+                <a href="/numerical_differentiation">Numerical Differentiation</a>
             </div>
         </div>
     )

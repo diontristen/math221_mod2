@@ -9,21 +9,16 @@ import {
 
 
 import index from './pages/index';
-import Simpson13 from './pages/simpson13';
-import Simpson38 from './pages/simpson38';
-import Fdd from './pages/fdd'
-import Bdd from './pages/bdd'
-
+import NumericalDifferentiation from './pages/numericalDifferentiation';
+import SimpsonsRule from './pages/simpsonsRule';
 
 function App() {
   return (
     <Router>
       <Switch>
         <Route exact path="/" component={index}/>
-        <Route exact path="/simpsons_1_3" component={Simpson13}/>
-        <Route exact path="/simpsons_3_8" component={Simpson38}/>
-        <Route exact path="/fdd" component={Fdd}/>
-        <Route exact path="/bdd" component={Bdd}/>
+        <Route exact path="/simpsons_rule" component={SimpsonsRule}/>
+        <Route exact path="/numerical_differentiation" component={NumericalDifferentiation}/>
       </Switch>
     </Router>
   );

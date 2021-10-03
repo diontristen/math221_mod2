@@ -38,9 +38,12 @@ export const computeSimpson13 = (equation, x1, x2, segment, roundOff) => {
     }
  
     let simpson1_3 = computeSimpson(stepper, summation, roundOff)
-    console.log(result)
-    console.log(round(summation, roundOff))
-    console.log(simpson1_3)
+
+    return {
+        result,
+        summation,
+        simpson1_3
+    }
 }
 
 

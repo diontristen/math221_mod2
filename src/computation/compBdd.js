@@ -5,7 +5,7 @@ import Polynomial from 'polynomial'
 
 
 
-export const computeAnswer = (equation, xi, step, roundOff) => {
+export const computeAnswerForBdd = (equation, xi, step, roundOff) => {
     let h2Step = round(step/2, roundOff)
     let h1 = computeBdd(equation, xi, step, roundOff)
     let h2 = computeBdd(equation, xi, h2Step, roundOff)
@@ -17,7 +17,7 @@ export const computeAnswer = (equation, xi, step, roundOff) => {
         richardson
     }
 
-    console.log(answer)
+    return answer
 
 }
 
