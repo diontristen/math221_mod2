@@ -1,6 +1,8 @@
 import './App.css';
 import "antd/dist/antd.css";
 
+import './styles/general.css'
+
 import {
   BrowserRouter as Router,
   Switch,
