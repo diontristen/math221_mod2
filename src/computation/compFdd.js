@@ -5,6 +5,11 @@ import Polynomial from 'polynomial'
 
 
 export const computeAnswerForFdd = (equation, xi, step, roundOff) => {
+
+    xi = parseFloat(x1)
+    step = parseFloat(step)
+    roundOff = parseInt(roundOff)
+
     let h2Step = round(step/2, roundOff)
     let h1 = computeFdd(equation, xi, step, roundOff)
     let h2 = computeFdd(equation, xi, h2Step, roundOff)
