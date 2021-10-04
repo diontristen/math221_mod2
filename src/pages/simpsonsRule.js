@@ -66,14 +66,23 @@ export default function SimpsonsRule() {
         let equation = e.target.value
         setEquation(equation)
         setError('')
+        setSolved(false)
     }
 
     const handleChange = (value) => {
         setTopic(value)
     }
 
+    const resetField = () => {
+        setEquation('')
+        setLowerLimit('')
+        setUpperLimit('')
+        setSegment('')
+        setRoundOff('')
+    }
+
     const validate = () => {
-        if (!equation || lowerLimit || upperLimit || segment || roundOff) {
+        if (!equation || !lowerLimit || !upperLimit || !segment || !roundOff) {
             setError("Make sure to fill up all the fields to proceed.")
             return false
         }
@@ -86,6 +95,7 @@ export default function SimpsonsRule() {
         if (validation === false) {
             return
         }
+        setError('')
 
         let result
         if (topic === '1/3') {
@@ -93,7 +103,6 @@ export default function SimpsonsRule() {
         } else {
             result = computeSimpson38(equation, lowerLimit, upperLimit, segment, roundOff)
         }
-        console.log(result)
 
         let tableData = result.result
         tableData.push({
@@ -104,6 +113,7 @@ export default function SimpsonsRule() {
         setRowData(result.result)
         setSummation(result.summation)
         setAnswer(result.answer)
+        setSolved(true)
     }
 
 
@@ -188,7 +198,7 @@ export default function SimpsonsRule() {
                                     <Text>
                                         Equation f(x)
                                     </Text>
-                                    <Input onChange={changeEquation} type="text" placeholder="0.2+25x-200x^2+675x^3-900x^4+400x^5" />
+                                    <Input value={equation} onChange={changeEquation} type="text" placeholder="0.2+25x-200x^2+675x^3-900x^4+400x^5" />
                                 </Col>
                             </Row>
                         </Col>
@@ -203,9 +213,10 @@ export default function SimpsonsRule() {
                             <Text>
                                 Lower Limit
                             </Text>
-                            <Input onChange={(e) => {
+                            <Input value={lowerLimit} onChange={(e) => {
                                 setLowerLimit(e.target.value)
                                 setError('')
+                                setSolved(false)
 
                             }} type="number" placeholder="0" />
                         </Col>
@@ -213,9 +224,10 @@ export default function SimpsonsRule() {
                             <Text>
                                 Upper Limit
                             </Text>
-                            <Input onChange={(e) => {
+                            <Input value={upperLimit} onChange={(e) => {
                                 setUpperLimit(e.target.value)
                                 setError('')
+                                setSolved(false)
 
                             }} type="number" placeholder="0.8" />
                         </Col>
@@ -229,9 +241,10 @@ export default function SimpsonsRule() {
                             <Text>
                                 Number of Segmet (n)
                             </Text>
-                            <Input onChange={(e) => {
+                            <Input value={segment} onChange={(e) => {
                                 setSegment(e.target.value)
                                 setError('')
+                                setSolved(false)
 
                             }} type="number" placeholder="2" />
                         </Col>
@@ -239,9 +252,11 @@ export default function SimpsonsRule() {
                             <Text>
                                 Decimal Places
                             </Text>
-                            <Input onChange={(e) => {
+                            <Input value={roundOff} onChange={(e) => {
                                 setRoundOff(e.target.value)
                                 setError('')
+                                setSolved(false)
+
                             }} type="number" placeholder="5" />
                         </Col>
                     </Row>
@@ -256,16 +271,30 @@ export default function SimpsonsRule() {
                             <Option value="1/3">Simpsons' Rule 1/3</Option>
                             <Option value="3/8">Simpsons' Rule 3/8</Option>
                         </Select>
-                        <Button
-                            onClick={handleSolve}
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "space-between"
+                            }}
                         >
-                            Solve
-                        </Button>
+                            <Button
+                                onClick={handleSolve}
+                            >
+                                Solve
+                            </Button>
+                            <Button
+                                onClick={resetField}
+                            >
+                                Reset
+                            </Button>
+                        </div>
                     </Space>
                 </div>
                 <div
                     style={{
-                        marginTop: "16px"
+                        marginTop: "16px",
+                        display: solved === true ? "block" : "none"
                     }}
                 >
                     <Title
