@@ -6,7 +6,7 @@ import Polynomial from 'polynomial'
 
 export const computeAnswerForFdd = (equation, xi, step, roundOff) => {
 
-    xi = parseFloat(x1)
+    xi = parseFloat(xi)
     step = parseFloat(step)
     roundOff = parseInt(roundOff)
 
