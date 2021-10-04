@@ -79,6 +79,7 @@ export default function SimpsonsRule() {
         setUpperLimit('')
         setSegment('')
         setRoundOff('')
+        setSolved(false)
     }
 
     const validate = () => {
