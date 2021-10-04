@@ -40,7 +40,7 @@ export default function LayoutComponent({ children }) {
                         style={{
                             width: "100%", height: "100%"
                         }}
-                        alt="example"
+                        alt="Logo"
                         className="logo"
                         src="assets/mp_icon.png" />
                 </div>
@@ -50,14 +50,14 @@ export default function LayoutComponent({ children }) {
                         icon={<Text >H</Text>}>
                         Home
                     </Menu.Item>
-                    <Menu.Item key="newton"
+                    <Menu.Item key="simpsons_rule"
                         onClick={() => goToPage('simpsons_rule')}
                         icon={<Text >SR</Text>}>
                         Simpson's Rule
                     </Menu.Item>
                     <Menu.Item
                         onClick={() => goToPage('numerical_differentiation')}
-                        key="gaussSidel" icon={<Text >ND</Text>}>
+                        key="numerical_differentiation" icon={<Text >ND</Text>}>
                         Numerical Differentiation
                     </Menu.Item>
                 </Menu>

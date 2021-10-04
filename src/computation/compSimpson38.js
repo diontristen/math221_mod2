@@ -5,21 +5,28 @@ import Polynomial from 'polynomial'
 
 
 export const computeSimpson38 = (equation, x1, x2, segment, roundOff) => {
-    let stepper = computeStep(x1, x2, segment,roundOff)
-    
-    let iterate = true
-    
+
+    x1 = parseFloat(x1)
+    x2 = parseFloat(x2)
+    segment = parseFloat(segment)
+    roundOff = parseInt(roundOff)
 
     let x = x1
     let k = 0
     let result = []
     let summation = 0
+
+
+    let stepper = computeStep(x1, x2, segment,roundOff)
+    
+    let iterate = true
+
     while (iterate === true) {
         
         let fx = computeFx(equation, x, roundOff)
         let pattern = checkPattern(k, segment)
         let computed = computePattern(fx, pattern, roundOff)
-        summation = summation + computed
+        summation = round(summation + computed, roundOff)
         let data = {
             k: k,
             x: x,
@@ -37,13 +44,14 @@ export const computeSimpson38 = (equation, x1, x2, segment, roundOff) => {
         k++
     }
  
-    let simpson3_8 = computeSimpson(stepper, summation, roundOff)
+    let answer = computeSimpson(stepper, summation, roundOff)
 
 
     return {
         result,
+        stepper,
         summation,
-        simpson3_8
+        answer
     }
 }
 

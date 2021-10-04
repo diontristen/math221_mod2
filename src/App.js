@@ -2,6 +2,7 @@ import './App.css';
 import "antd/dist/antd.css";
 
 import './styles/general.css'
+import './styles/table.css'
 
 import {
   BrowserRouter as Router,
