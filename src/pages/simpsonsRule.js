@@ -353,7 +353,7 @@ export default function SimpsonsRule() {
                                 <strong>Computation of the integral</strong>
                             </Text>
                             <Text>
-                                I = ({stepper}/3)*{summation}
+                                I = ({topic === '1/3' ? stepper : `(3*${stepper})`}/{topic === '1/3' ? '3' : '8'})*{summation}
                             </Text>
                             <Text>
                                 I = {answer} square units
