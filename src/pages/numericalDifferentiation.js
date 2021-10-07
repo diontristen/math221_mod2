@@ -5,24 +5,23 @@ import LayoutComponent from '../components/Layout'
 import { computeAnswerForFdd } from '../computation/compFdd';
 import { computeAnswerForBdd } from '../computation/compBdd';
 
+
+import { parseColumn } from '../util/columnData';
+
 const { Text, Title } = Typography;
 const { Option } = Select;
 
 export default function NumericalDifferentiation() {
 
-    const [equation, setEquation] = useState('0.2+25x-200x^2+675x^3-900x^4+400x^5')
-    const [initial, setInitial] = useState('0')
-    const [stepper, setStepper] = useState(2)
+    const [equation, setEquation] = useState('-0.1x^4-0.15x^30-0.5x^2-0.25x+1.2')
+    const [initial, setInitial] = useState('0.5')
+    const [stepper, setStepper] = useState('0.25')
     const [solved, setSolved] = useState(false)
     const [roundOff, setRoundOff] = useState(5)
     const [rowData, setRowData] = useState([])
     const [error, setError] = useState('')
-    const [topic, setTopic] = useState('bdd')
+    const [topic, setTopic] = useState('fdd')
 
-    useEffect(() => {
-        console.log(computeAnswerForFdd('-0.1x^4-0.15x^3-0.5x^2-0.25x+1.2', 0.5, 0.25, 5))
-        console.log(computeAnswerForBdd('-0.1x^4-0.15x^3-0.5x^2-0.25x+1.2', 0.5, 0.25, 5))
-    }, [])
     const [columnData, setColumnData] = useState([
         {
             title: 'xi',
@@ -31,13 +30,13 @@ export default function NumericalDifferentiation() {
             width: "10%"
         },
         {
-            title: 'xi+1',
+            title: `xi${topic === 'fdd' ? '+' : '-'}1`,
             dataIndex: 'x1',
             key: 'x1',
             width: "10%"
         },
         {
-            title: 'xi+2',
+            title: `xi${topic === 'fdd' ? '+' : '-'}2`,
             dataIndex: 'x2',
             key: 'x2',
             width: "10%"
@@ -49,22 +48,16 @@ export default function NumericalDifferentiation() {
             width: "10%"
         },
         {
-            title: 'f(x+1)',
+            title: `f(x${topic === 'fdd' ? '+' : '-'}1)`,
             dataIndex: 'fx1',
             key: 'fx1',
             width: "10%"
         },
         {
-            title: 'f(x+2)',
+            title: `f(x${topic === 'fdd' ? '+' : '-'}2)`,
             dataIndex: 'fx2',
             key: 'fx2',
             width: "10%"
-        },
-        {
-            title: "More Accurate",
-            dataIndex: 'accurate',
-            key: 'accurate',
-            width: "20%"
         },
         {
             title: 'Truncated',
@@ -73,10 +66,20 @@ export default function NumericalDifferentiation() {
             width: "20%"
         },
 
+        {
+            title: "More Accurate",
+            dataIndex: 'accurate',
+            key: 'accurate',
+            width: "20%"
+        },
+
 
     ])
 
     const [answer, setAnswer] = useState('')
+    const [h1, setH1] = useState({})
+    const [h2, setH2] = useState({})
+
 
     const changeEquation = (e) => {
         let equation = e.target.value
@@ -114,20 +117,20 @@ export default function NumericalDifferentiation() {
         setError('')
 
         let result
+
         if (topic === 'bdd') {
-            console.log('bdd', equation, initial, stepper, roundOff)
             result = computeAnswerForBdd(equation, initial, stepper, roundOff)
         } else {
-            console.log('bdd', equation, initial, stepper, roundOff)
             result = computeAnswerForFdd(equation, initial, stepper, roundOff)
         }
+        setColumnData(parseColumn(topic))
 
-        console.log('result',result)
-        
-        setRowData([result.h1])
+        setRowData([result.h1, result.h2])
+        setH1(result.h1)
+        setH2(result.h2)
         setAnswer(result.richardson)
         setSolved(true)
-        
+
     }
 
     return (
@@ -268,9 +271,9 @@ export default function NumericalDifferentiation() {
                     }}
                 >
                     <Space direction="vertical">
-                        <Select defaultValue="bdd" onChange={handleChange}>
-                            <Option value="bdd">Backward Finite Divided Difference</Option>
+                        <Select defaultValue="fdd" onChange={handleChange}>
                             <Option value="fdd">Forward Finite Divided Difference</Option>
+                            <Option value="bdd">Backward Finite Divided Difference</Option>
                         </Select>
                         <div
                             style={{
@@ -331,7 +334,13 @@ export default function NumericalDifferentiation() {
                                 <strong>Richardson</strong>
                             </Text>
                             <Text>
-                                Richardson = {answer}
+                                D = (4/3 * (h2)) - (1/3 * (h1))
+                            </Text>
+                            <Text>
+                                D = (4/3 * ({h2.truncated})) - (1/3 * ({h1.truncated}))
+                            </Text>
+                            <Text>
+                                D = {answer} square units
                             </Text>
                         </Space>
                     </div>

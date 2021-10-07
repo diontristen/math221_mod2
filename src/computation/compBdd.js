@@ -15,7 +15,8 @@ export const computeAnswerForBdd = (equation, xi, step, roundOff) => {
     let h1 = computeBdd(equation, xi, step, roundOff)
     let h2 = computeBdd(equation, xi, h2Step, roundOff)
     let richardson = computeRichardson(h1.truncated, h2.truncated, roundOff)
-
+    h1['k'] = 'h1'
+    h2['k'] = 'h2'
     let answer = {
         h1,
         h2,
